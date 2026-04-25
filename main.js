@@ -52,7 +52,7 @@ function updateGreeting() {
 
     if (hour >= 12 && hour < 18) greet = "Good Afternoon"
     else if (hour >= 18) greet = "Good Evening"
-    document.getElementById("greeting").textContent = `${greet}, Ansh`
+    document.getElementById("greeting").textContent = `${greet}`
 }
 
 function saveData() {
