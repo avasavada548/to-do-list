@@ -15,6 +15,7 @@ function loadData() {
                 status: "pending",
                 priority: "minor",
                 completed: false,
+                dueDate: 2026-05-01,
             },
 
              {
@@ -23,6 +24,7 @@ function loadData() {
                 status: "progress",
                 priority: "normal",
                 completed: false,
+                dueDate: 2026-05-01,
             },
 
              {
@@ -31,6 +33,7 @@ function loadData() {
                 status: "pending",
                 priority: "critical",
                 completed: false,
+                dueDate: 2026-05-01,
             },
 
              {
@@ -39,6 +42,7 @@ function loadData() {
                 status: "pending",
                 priority: "minor",
                 completed: false,
+                dueDate: 2026-05-01,
             },
         ];
     }
@@ -63,7 +67,10 @@ function renderTasks() {
     const onHold = tasks.filter((t) => !t.completed)
     const completed = tasks.filter((t) => t.completed)
 
-    document.getElementById("onHoldTasks").innerHTML = onHold.length ? onHold.map((t) => `
+    document.getElementById("onHoldTasks").innerHTML = onHold.length ? onHold.map((t) => {
+     const today = new Date().toISOString().split("T")[0]
+     const isOverdue = t.dueDate && new Date(t.dueDate) < new Date() && !t.completed   
+     return `
      <div class="task-item">
                         <div class="task-checkbox ${t.completed ? 'completed' : ''}" onclick="toggleTask(${t.id})"></div>
                         <div class="task-content">
@@ -87,10 +94,13 @@ function renderTasks() {
                             <i class="fas fa-trash" style="font-size: 12px;"></i>
                         </button>
                     </div>
-    `).join("")
+    `}).join("")
     : `<p style="color: #9ca3af; padding: 20px;">No tasks on hold.</p>`
 
-    document.getElementById("completedTasks").innerHTML = completed.length ? completed.map((t) => `
+    document.getElementById("completedTasks").innerHTML = completed.length ? completed.map((t) => {
+        const today = new Date().toISOString().split("T")[0]
+        const isOverdue = t.dueDate && new Date(t.dueDate) < new Date() && !t.completed
+        return `
         <div class="task-item">
                         <div class="task-checkbox completed" onclick="toggleTask(${t.id})"></div>
                         <div class="task-content">
@@ -109,7 +119,7 @@ function renderTasks() {
                             <i class="fas fa-trash" style="font-size: 12px;"></i>
                         </button>
                     </div>
-    `).join("")
+    `}).join("")
     : `<p style="color: #9ca3af; padding: 20px;">No completed tasks.</p>`
 
     const total = tasks.length
@@ -161,6 +171,7 @@ document.getElementById("taskForm").addEventListener("submit", (e) => {
     const status = document.getElementById("taskStatus").value
     const priority = document.getElementById("taskPriority").value
     const user = document.getElementById("taskUser").value
+    const dueDate = document.getElementById("taskDueDate").value
 
     if (editingId) {
         const t = tasks.find((t) => t.id === editingId)
@@ -168,6 +179,7 @@ document.getElementById("taskForm").addEventListener("submit", (e) => {
         t.status = status
         t.priority = priority
         t.user = user
+        t.dueDate = dueDate
         t.completed = status === "completed"
     } else {
         tasks.push({
@@ -176,6 +188,7 @@ document.getElementById("taskForm").addEventListener("submit", (e) => {
             status,
             priority,
             user,
+            dueDate,
             completed: status === "completed",
         })
     }
@@ -192,6 +205,7 @@ function editTask(id) {
         document.getElementById("taskStatus").value = t.status
         document.getElementById("taskPriority").value = t.priority
         document.getElementById("taskUser").value = t.user
+        document.getElementById("taskDueDate").value = t.dueDate || ""
         openModal()
     }
 }
