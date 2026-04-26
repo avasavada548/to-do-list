@@ -424,6 +424,24 @@ form-group label {
     margin-left: 6px;
 }
 
+#taskDueDate {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.task-due-date {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.task-item.overdue .task-due-date {
+    color: #ef4444;
+    font-weight: bold;
+} 
+
 @media (max-width: 1024px) {
     .container {
         grid-template-columns: 1fr;
