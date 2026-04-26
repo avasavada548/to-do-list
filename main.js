@@ -85,7 +85,10 @@ function renderTasks() {
                              t.priority.charAt(0).toUpperCase() + t.priority.slice(1)}
                             <i class="fas fa-circle"></i>
                         </div>
-                        <span class="task-user">${t.user}</span>
+                        <span class="task-due-date">
+                            ${t.dueDate ? `Due: ${t.dueDate}`: "No due date"}
+                        </span>
+                        <span class="task-user">${t.user || "No user assigned"}</span>
                         <button class="icon-btn" style="width: 30px; height: 30px;" onclick="editTask(${t.id})">
                             <i class="fas fa-pen" style="font-size: 12px;"></i>
                         </button>
@@ -111,6 +114,10 @@ function renderTasks() {
                              t.priority.charAt(0).toUpperCase() + t.priority.slice(1)}
                             <i class="fas fa-circle"></i>
                         </div>
+                        <span class="task-due-date">
+                            ${t.dueDate ? `Due: ${t.dueDate}`: "No due date"}
+                        </span>
+                        <span class="task-user">${t.user || "No user assigned"}</span>
                         <button class="icon-btn" style="width: 30px; height: 30px;" onclick="editTask(${t.id})">
                             <i class="fas fa-pen" style="font-size: 12px;"></i>
                         </button>
